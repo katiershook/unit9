@@ -4,8 +4,8 @@
 
 const express = require('express');
 const morgan = require('morgan');
-const Sequelize = require('sequelize');
-// const {sequelize}= require('./models');
+// const Sequelize = require('sequelize');
+const {sequelize}= require('./models');
 const routes = require('./routes');
 
 
@@ -20,10 +20,10 @@ app.use(morgan('dev'));
 
 
 // sequelize 
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: 'fsjstd-restapi.db'
-});
+// const sequelize = new Sequelize({
+//   dialect: 'sqlite',
+//   storage: 'fsjstd-restapi.db'
+// });
 
 // async IIFE
 (async () => {

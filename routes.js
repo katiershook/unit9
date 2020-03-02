@@ -1,7 +1,7 @@
 'use strict'
 const express = require('express');
 const router = express.Router();
-// const bcrypt = require('bycryptjs');
+ const bcrypt = require('bcryptjs');
 const auth = require('basic-auth');
 const { check, validationResult } = require('express-validator');
 const User = require('./models/user');
@@ -28,7 +28,7 @@ const userAuth = async (req, res, next ) => {
     if (authentication){
         const legitUser = allUsers.find(user => user.emailAddress === authentication.name);
         if(legitUser){
-            const authenticated = bycrypt 
+            const authenticated = bcryptjs
             .compareSync(authentication.pass , legitUser.password);
 
             if(authenticated){
@@ -87,7 +87,7 @@ router.post('/users', asyncHandler(async (req,res) => {
      } else {
          const user = req.body;
          if(user.password){
-             user.password = bycrpt.hashSync(user.password);
+             user.password = bcrypt.hashSync(user.password);
          }
             await User.create(req.body);
             res.status(201).location('/').end();
