@@ -1,0 +1,59 @@
+'use strict'
+const Sequelize = require('sequelize');
+// first name, last name, email, password  as STRING
+module.exports = (sequelize) =>{
+    class User extends Sequelize.Model{}
+    User.init({
+        id:{
+            type: Sequelize.STRING,
+            allowNull:false,
+            primaryKey: true,
+            autoIncrement: true,
+           },
+           firstName :{
+            type: Sequelize.STRING,
+               allowNull: false,
+            validate:{
+                notnull: {
+                    msg: " a name is required"
+                }}}, 
+                lastName :{
+                    type: Sequelize.STRING,
+                    allowNull: false,
+                 validate:{
+                     notnull: {
+                         msg: " a  last name is required"
+                     }
+                    }
+},
+                emailAddress:{
+                    type: Sequelize.STRING,
+                    allowNull: false,
+                    validate:{
+                        notNull:{
+                            msg: " your email is required"
+                        }
+                    }
+                    },
+
+                    password:{
+                        type: Sequelize.STRING,
+                        allowNull: false,
+                        validate:{
+                            notNull:{
+                                msg:" a password is required"
+                            },
+                        },
+                        },
+
+                    }, {sequelize});
+                
+
+           model.User.associate= (models) => {
+               User.belongsTo(models.Course)
+           };
+           return User;
+        }
+    
+   
+    // })}
