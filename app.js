@@ -2,14 +2,26 @@
 
 // load modules
 
-const express = require('express');
-const morgan = require('morgan');
+ const express = require('express');
+ const morgan = require('morgan');
  const {sequelize} = require('./models');
-const routes = require('./routes');
+ const routes = require('./routes');
 
 
 // variable to enable global error logging
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
+
+
+// async IIFE
+(async () => {
+  try {
+      await sequelize.authenticate();
+      console.log('Connected to database');
+  } catch (error) {
+      console.error('Error connecting');
+
+  }
+})()
 
 // create the Express app
 const app = express();
@@ -20,16 +32,6 @@ app.use(morgan('dev'));
 
 
 
-// async IIFE
-(async () => {
-    try {
-        await sequelize.authenticate();
-        console.log('Connected to database');
-    } catch (error) {
-        console.error('Error connecting');
-  
-    }
-})()
 
 // TODO setup your api routes here
 app.use('/api', routes);

@@ -43,8 +43,14 @@ title: {
      },
   }, { sequelize});
 
-  model.Course.associate = (models) => {
-    Course.belongsTo(models.User);
+    Course.associate = (models) => {
+    models.Course.belongsTo(models.User, {
+        foreignKey:{
+            fieldName: "userId",
+            allowNull: false
+        }
+    
+    });
   };
 
 return Course;
