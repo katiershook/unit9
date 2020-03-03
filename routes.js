@@ -26,7 +26,7 @@ const userAuth = async (req, res, next ) => {
     const authentication = auth(req);
 
 
-     const users = await User.findAll();
+    //  const users = await User.findAll();
 
     if (authentication){
         const user = await  Users.find(user => user.emailAddress === authentication.name);
@@ -55,7 +55,7 @@ const userAuth = async (req, res, next ) => {
 };
 
 
-//user routes. Current user without sensitive info
+//user routes. 
 router.get('/users', userAuth, asyncHandler(async (req, res) => {
     const AuthorizedUser = req.currentUser;
     const user = await User.findByPk(user.id, {
