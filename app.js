@@ -8,12 +8,11 @@
  const routes = require('./routes');
 
 
-// variable to enable global error logging
-const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
+
 
 
 // async IIFE
-(async () => {
+( async () => {
   try {
       await sequelize.authenticate();
       console.log('Connected to database');
@@ -21,8 +20,10 @@ const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'tr
       console.error('Error connecting');
 
   }
-})()
+})();
 
+// variable to enable global error logging
+const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
 // create the Express app
 const app = express();
 app.use(express.json())
@@ -47,7 +48,7 @@ app.get('/', (req, res) => {
 // send 404 if no other route matched
 app.use((req, res) => {
   res.status(404).json({
-    message: 'Route Not Found',
+    message: 'Route Not Founnnnd',
   });
 });
 

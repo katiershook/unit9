@@ -7,6 +7,7 @@ const auth = require('basic-auth');
 
 const User = require('./models').User;
 const Course = require('./models').Course;
+const app = express();
 
 
 
@@ -25,11 +26,11 @@ const userAuth = async (req, res, next ) => {
     const authentication = auth(req);
 
 
-    const allUsers= await User.findAll();
+     const users = await User.findAll();
 
     if (authentication){
-        const legitUser = allUsers.find(user => user.emailAddress === authentication.name);
-        if(legitUser){
+        const user = await  Users.find(user => user.emailAddress === authentication.name);
+        if(user){
             const authenticated = bcryptjs
             .compareSync(authentication.pass , legitUser.password);
 
@@ -56,8 +57,8 @@ const userAuth = async (req, res, next ) => {
 
 //user routes. Current user without sensitive info
 router.get('/users', userAuth, asyncHandler(async (req, res) => {
-    const legitUser = req.currentUser;
-    const user = await User.findByPk(legitUser.id, {
+    const AuthorizedUser = req.currentUser;
+    const user = await User.findByPk(user.id, {
     attributes: {
         exclude: [
             'password',
@@ -74,7 +75,7 @@ router.get('/users', userAuth, asyncHandler(async (req, res) => {
         }
 
 }
-) )
+) );
 
 //post for user
 
