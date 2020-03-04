@@ -26,10 +26,10 @@ const userAuth = async (req, res, next ) => {
     const authentication = auth(req);
 
 
-    //  const users = await User.findAll();
+      const users = await User.findAll();
 
     if (authentication){
-        const user = await  Users.find(user => user.emailAddress === authentication.name);
+        const user = await  User.findAll(user => user.emailAddress === authentication.name);
         if(user){
             const authenticated = bcryptjs
             .compareSync(authentication.pass , legitUser.password);
@@ -58,7 +58,7 @@ const userAuth = async (req, res, next ) => {
 //user routes. 
 router.get('/users', userAuth, asyncHandler(async (req, res) => {
     const AuthorizedUser = req.currentUser;
-    const user = await User.findByPk(user.id, {
+    const user = await User.findById(user.id, {
     attributes: {
         exclude: [
             'password',
@@ -98,6 +98,35 @@ router.post('/users', asyncHandler(async (req,res) => {
          }
 })
 )
+
+
+// get courses
+
+router.get('/courses' , asyncHandler(async (req, res) => {
+    const courses = await Course.findAll({
+        attribute: {
+            exclude:[
+                'password',
+                'createdAt',
+                'updatedAt'
+            ]
+        },
+        include: [
+            {
+                model: User, 
+                attributes: {
+                    exclude: [
+                        'password',
+                        'createdAt',
+                        'updatedAt'
+                    ]
+                }
+
+            }
+        ]
+    });
+    res.json(courses);
+}))
 //     }
 // }))
 
